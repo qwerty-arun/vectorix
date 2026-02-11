@@ -3,9 +3,6 @@ CXXFLAGS  := -std=c++20 -Wall -Wextra -Iinclude
 BUILD_DIR := build
 OBJ_DIR   := $(BUILD_DIR)/obj
 BIN_DIR   := $(BUILD_DIR)/bin
-BENCH_DIR := benchmarks
-BENCH_SRCS := $(wildcard $(BENCH_DIR)/*.cpp)
-BENCH_BINS := $(BENCH_SRCS:$(BENCH_DIR)/%.cpp=$(BIN_DIR)/%)
 
 ifeq ($(DEBUG),1)
 	CXXFLAGS += -g -O0
@@ -31,24 +28,10 @@ $(BIN): $(OBJ) $(TEST)
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Build benchmark executables
-$(BIN_DIR)/%: $(BENCH_DIR)/%.cpp $(OBJ)
-	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
 # Run test
 .PHONY: run
 run: $(BIN)
 	./$(BIN)
-
-.PHONY: benchmark
-benchmark: $(BENCH_BINS)
-	@echo "Running benchmarks..."
-	@for b in $(BENCH_BINS); do $$b; done
-
-.PHONY: bench-opt
-bench-opt:
-	$(MAKE) CXXFLAGS="-std=c++20 -Wall -Wextra -Iinclude -O3 -march=native" benchmark
 
 # Clean
 .PHONY: clean
