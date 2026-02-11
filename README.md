@@ -41,12 +41,12 @@ make DEBUG=1
 make run
 ```
 
-## Run Benchmarks
+### Run Benchmarks
 ```bash
 make benchmark
 ```
 
-## Run Optimized Benchmarks
+### Run Optimized Benchmarks
 ```bash
 make bench-opt
 ```
