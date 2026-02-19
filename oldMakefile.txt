@@ -1,0 +1,71 @@
+CXX       := g++
+CXXFLAGS  := -std=c++20 -Wall -Wextra -Iinclude
+BUILD_DIR := build
+OBJ_DIR   := $(BUILD_DIR)/obj
+BIN_DIR   := $(BUILD_DIR)/bin
+BENCH_DIR := benchmarks
+BENCH_SRCS := $(wildcard $(BENCH_DIR)/*.cpp)
+BENCH_BINS := $(BENCH_SRCS:$(BENCH_DIR)/%.cpp=$(BIN_DIR)/%)
+
+ifeq ($(DEBUG),1)
+	CXXFLAGS += -g -O0
+else
+	CXXFLAGS += -O3
+endif
+
+SRC  := src/vec3.cpp
+OBJ  := $(OBJ_DIR)/vec3.o
+TEST := tests/test_vec3.cpp
+BIN  := $(BIN_DIR)/test_vec3
+
+# Default target
+all: $(BIN)
+
+# Compile object file
+$(OBJ_DIR)/%.o: src/%.cpp
+	@mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
+
+# Build test executable
+$(BIN): $(OBJ) $(TEST)
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+# Build benchmark executables
+$(BIN_DIR)/%: $(BENCH_DIR)/%.cpp $(OBJ)
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+# Run test
+.PHONY: run
+run: $(BIN)
+	./$(BIN)
+
+.PHONY: debug
+debug: $(BENCH_BINS)
+	@echo "Running debug..."
+	@for b in $(BENCH_BINS); do $$b; done
+
+.PHONY: benchmark
+benchmark: $(BENCH_BINS)
+	@echo "Running benchmarks..."
+	@for b in $(BENCH_BINS); do $$b; done
+
+.PHONY: bench-opt
+bench-opt:
+	$(MAKE) CXXFLAGS="-std=c++20 -Wall -Wextra -Iinclude -O3 -march=native" benchmark
+
+.PHONY: compare-debug-bench
+compare-debug-bench:
+	rm -rf $(BUILD_DIR)
+	$(MAKE) CXXFLAGS="-std=c++20 -Wall -Wextra -Iinclude -g -O0 -march=native" debug 
+	rm -rf $(BUILD_DIR)
+	$(MAKE) CXXFLAGS="-std=c++20 -Wall -Wextra -Iinclude -O3 -march=native" benchmark
+
+# Clean
+.PHONY: clean
+clean:
+	rm -rf $(BUILD_DIR)
+
+# Include dependency files
+-include $(OBJ:.o=.d)

@@ -1,11 +1,11 @@
 #include <iostream>
 #include <chrono>
-#include "vec2.hpp"
+#include "vec3.hpp"
 
 using namespace vectorix;
 
 int main() {
-    Vec2 v(3.0, 4.0);
+    Vec3 v(3.0, 4.0, 5.0);
 
     const int iterations = 10'000'000;
 

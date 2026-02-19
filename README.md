@@ -1,6 +1,6 @@
 # Vectorix 
 
-- A lightweight 2D vector mathematics library written in modern C++20.
+- A lightweight mathematics library written in modern C++20.
 
 - This project is built to practice:
   - Clean C++ API design
@@ -8,12 +8,14 @@
   - Advanced Makefile usage
   - Debug vs Release builds
   - Dependency tracking
+  - Full Scalability
 
 ---
 
 ## Features
 
 - 2D Vector class (`Vec2`)
+- 3D Vector class (`Vec3`)
 - Operator overloading (+, -, *, /)
 - Dot product
 - Length calculation
@@ -49,6 +51,11 @@ make benchmark
 ### Run Optimized Benchmarks
 ```bash
 make bench-opt
+```
+
+### Run both Debug and Benchmark and compare results
+```bash
+make compare-debug-bench
 ```
 
 ### Clean Build Files
@@ -87,6 +94,7 @@ int main() {
   - Separate build directory (build/)
   - Automatic header dependency generation (-MMD -MP)
   - Debug and Release configuration
+  - No hardcoded filenames
   - Object file isolation
   - Clean rebuild targets
 - This structure scales well for larger math libraries.
