@@ -4,6 +4,7 @@
 using namespace vectorix;
 
 int main(){
+    std::cout << "\n=====START OF VEC3 TEST=====\n" << std::endl;
     Vec3 a(3.0, 4.0, 5.0);
     Vec3 b(5.0, 3.0, 4.0);
 
@@ -22,5 +23,6 @@ int main(){
     n = b.normalized();
     std::cout << "Normalized b = (" << n.x << ", " << n.y << "," << n.z << ")\n";
 
+    std::cout << "\n=====END OF VEC3 TEST=====\n" << std::endl;
     return 0;
 }

@@ -70,7 +70,7 @@ make clean
 #include "vec2.hpp"
 #include <iostream>
 
-using namespace vec2lib;
+using namespace vectorix;
 
 int main() {
     Vec2 a(3.0, 4.0);
