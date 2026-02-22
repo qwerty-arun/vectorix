@@ -2,6 +2,8 @@
 #include "mat2.hpp"
 #include "vec2.hpp"
 
+#define PI 3.14159265259
+
 using namespace vectorix;
 
 int main(){
@@ -36,6 +38,16 @@ int main(){
     Mat2 inverseA = A.inverse();
     std::cout << "\nInverse of Matrix A: " << std::endl;
     inverseA.display();
+
+    Vec2 vec(1, 0);
+    std::cout << "\nVector vec: " << vec.x << " " << vec.y << std::endl;
+
+    Mat2 R = Mat2::rotation(PI/2);
+    std::cout << "\nRotation Matrix: " << std::endl;
+    R.display();
+
+    result = R * vec;
+    std::cout << "\nVector result = R * vec: " << result.x << " " << result.y << std::endl;
 
     std::cout << "\n=====END OF MAT2 TEST=====\n" << std::endl;
     return 0; 

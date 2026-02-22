@@ -2,6 +2,7 @@
 #include "vec2.hpp"
 #include <stdexcept>
 #include <iostream>
+#include <cmath>
 
 namespace vectorix{
 
@@ -29,6 +30,40 @@ void Mat2::display() const {
 // Identity
 Mat2 Mat2::identity(){
     return Mat2(1, 0, 0, 1);
+}
+
+// Scaling
+Mat2 Mat2::scale(double sx, double sy){
+    return Mat2(sx, 0, 0 , sy);
+}
+
+// Rotation
+Mat2 Mat2::rotation(double radians) {
+    double c = std::cos(radians);
+    double s = std::sin(radians);
+
+    const double EPS = 1e-8;
+
+    if (std::abs(c) < EPS) c = 0.0;
+    if (std::abs(s) < EPS) s = 0.0;
+
+    return Mat2(c, -s,
+                s,  c);
+}
+
+// Shear
+Mat2 Mat2::shear(double shx, double shy){
+    return Mat2(1, shx, shy, 1);
+}
+
+// Reflection about X axis
+Mat2 Mat2::reflectX(){
+    return Mat2(1, 0, 0, -1);
+}
+
+// Reflection about Y axis
+Mat2 Mat2::reflectY(){
+    return Mat2(-1, 0, 0, 1);
 }
 
 // Addition

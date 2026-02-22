@@ -19,6 +19,22 @@ public:
     // Display matrix
     void display() const ;
 
+    // Transformations
+    // Scaling matrix
+    static Mat2 scale(double sx, double sy);
+
+    // Rotation matrix (radians)
+    static Mat2 rotation(double radians);
+
+    // Shear matrix
+    static Mat2 shear(double shx, double shy);
+
+    // Reflection across X axis
+    static Mat2 reflectX();
+
+    // Reflection across Y axis
+    static Mat2 reflectY();
+
     // Matrix operations
     Mat2 operator+(const Mat2& other) const;
     Mat2 operator-(const Mat2& other) const;
