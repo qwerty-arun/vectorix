@@ -1,6 +1,7 @@
 #include <iostream>
 #include "mat3.hpp"
 #include "vec3.hpp"
+#include "vec2.hpp"
 
 using namespace vectorix;
 
@@ -35,6 +36,15 @@ int main(){
     Mat3 inverseA = A.inverse();
     std::cout << "\nInverse of Matrix A: " << std::endl;
     inverseA.display();
+
+    Vec2 p(2, 3);
+    std::cout << "\nVector p: " << p.x << " " << p.y << std::endl;
+
+    Mat3 T = Mat3::translation(5, -2);
+    T.display();
+
+    Vec2 result = T * p;
+    std::cout << "\nTranslated Vector result = T * p: " << result.x << " " << result.y << std::endl;
 
     std::cout << "\n=====END OF MAT3 TEST=====\n" << std::endl;
     return 0; 

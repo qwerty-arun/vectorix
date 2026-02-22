@@ -1,7 +1,9 @@
 #include "mat3.hpp"
 #include "vec3.hpp"
+#include "vec2.hpp"
 #include <stdexcept>
 #include <iostream>
+#include <cmath>
 
 namespace vectorix {
 
@@ -37,6 +39,57 @@ void Mat3::display() const {
 // Identity
 Mat3 Mat3::identity(){
     return Mat3(1, 0, 0, 0, 1, 0, 0, 0, 1);
+}
+
+// Translation (move a point by (tx, ty))
+// (x, y) -> (x + tx, y + ty)
+Mat3 Mat3::translation(double tx, double ty){
+    return Mat3(1, 0, tx, 
+                0, 1, ty, 
+                0, 0, 1);
+}
+
+// Scaling
+Mat3 Mat3::scale(double sx, double sy){
+    return Mat3(sx, 0, 0,
+                0, sy, 0,
+                0, 0, 1);
+}
+
+// Rotation
+Mat3 Mat3::rotation(double radians){
+    double c = std::cos(radians);
+    double s = std::sin(radians);
+
+    const double EPS = 1e-8;
+
+    if (std::abs(c) < EPS) c = 0.0;
+    if (std::abs(s) < EPS) s = 0.0;
+
+    return Mat3(c, -s, 0,
+                s,  c, 0,
+                0, 0, 1);
+}
+
+// Shear
+Mat3 Mat3::shear(double shx, double shy){
+    return Mat3(1, shx, 0,
+                shy, 1, 0,
+                0, 0, 1);
+}
+
+// Reflection about X-axis
+Mat3 Mat3::reflectX(){
+    return Mat3(1, 0, 0,
+                0, -1, 0,
+                0, 0, 1);
+}
+
+// Reflection about Y-axis
+Mat3 Mat3::reflectY(){
+    return Mat3(-1, 0, 0,
+                0, 1, 0,
+                0, 0, 1);
 }
 
 // Addition
@@ -81,6 +134,16 @@ Vec3 Mat3::operator*(const Vec3& v) const {
         mat[1][0] * v.x + mat[1][1] * v.y + mat[1][2] * v.z,
         mat[2][0] * v.x + mat[2][1] * v.y + mat[2][2] * v.z
     );
+} 
+
+// Vector Multiplication (but with Vec2)
+Vec2 Mat3::operator*(const Vec2& v) const {
+    Vec3 result = Vec3(
+        mat[0][0] * v.x + mat[0][1] * v.y + mat[0][2] * 1,
+        mat[1][0] * v.x + mat[1][1] * v.y + mat[1][2] * 1,
+        mat[2][0] * v.x + mat[2][1] * v.y + mat[2][2] * 1 
+    );
+    return Vec2(result.x, result.y);
 } 
 
 // Scalar Multiplication

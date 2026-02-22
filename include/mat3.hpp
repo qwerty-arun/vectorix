@@ -22,6 +22,26 @@ public:
     // Display matrix
     void display() const ;
 
+    // Transformations
+
+    // Translation
+    static Mat3 translation(double tx, double ty);
+
+    // Scaling matrix
+    static Mat3 scale(double sx, double sy);
+
+    // Rotation matrix (radians)
+    static Mat3 rotation(double radians);
+
+    // Shear matrix
+    static Mat3 shear(double shx, double shy);
+
+    // Reflection across X axis
+    static Mat3 reflectX();
+
+    // Reflection across Y axis
+    static Mat3 reflectY();
+
     // Matrix operations
     Mat3 operator+(const Mat3& other) const;
     Mat3 operator-(const Mat3& other) const;
@@ -29,6 +49,7 @@ public:
 
     // Matrix-Vector Multiplication
     class Vec3 operator*(const class Vec3& v) const;
+    class Vec2 operator*(const class Vec2& v) const;
 
     // Scalar Multiplication
     Mat3 operator*(double scalar) const;
