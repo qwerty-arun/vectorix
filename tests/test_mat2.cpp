@@ -13,7 +13,7 @@ int main(){
     std::cout << "\nMatrix A: " << std::endl;
     A.display();
 
-    Mat2 B = Mat2::identity();
+    Mat2 B(5, -1, 0, 7);
     std::cout << "\nMatrix B: " << std::endl;
     B.display();
 
@@ -21,7 +21,8 @@ int main(){
     std::cout << "\nProduct of Matrix A and Matrix B: " << std::endl;
     C.display();
 
-    std::cout << "\nDeterminant: " << A.determinant() << "\n";
+    std::cout << "\nDeterminant of Matrix A: " << A.determinant() << "\n";
+    std::cout << "\nDeterminant of Matrix B: " << B.determinant() << "\n";
 
     Vec2 v(1, 1);
     Vec2 result = A * v;
